@@ -67,7 +67,7 @@ export async function searchFromApi(
           // const matches = url.match(m3u8Regex) || [];
           if (matches.length > episodes.length) {
             episodes_title = matches.map((m) => m[1]);
-            episodes = matches.map((m) => m[2]);
+            episodes = matches.map((m) => m[2].replace('ttps:', 'https:'));
           }
         });
       }

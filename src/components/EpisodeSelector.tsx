@@ -393,7 +393,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
           </div>
 
           {/* 集数网格 */}
-          <div className='grid grid-cols-[repeat(auto-fill,minmax(40px,1fr))] auto-rows-[40px] gap-x-3 gap-y-3 overflow-y-auto h-full pb-4'>
+          <div className='grid grid-cols-[repeat(auto-fill,minmax(auto,1fr))] auto-rows-[40px] gap-x-3 gap-y-3 overflow-y-auto h-full pb-4'>
             {(() => {
               const len = currentEnd - currentStart + 1;
               const episodes = Array.from({ length: len }, (_, i) =>
@@ -413,10 +413,9 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:scale-105 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20'
                     }`.trim()}
                 >
-                  {episodeNumber}{' '}
                   {episodesTitle.length >= episodeNumber
                     ? episodesTitle[episodeNumber - 1]
-                    : ''}
+                    : episodeNumber}
                 </button>
               );
             })}
