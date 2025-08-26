@@ -146,7 +146,7 @@ function PlayPageClient() {
   if (document.title.includes('|')) {
     document.title = document.title.split('|')[0] + '| ' + detail?.title;
   } else {
-    document.title = document.title + '| ' + detail?.title;
+    document.title = document.title + ' | ' + detail?.title;
   }
 
   // 用于记录是否需要在播放器 ready 后跳转到指定进度
