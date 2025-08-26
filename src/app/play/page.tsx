@@ -416,7 +416,11 @@ function PlayPageClient() {
       setVideoUrl('');
       return;
     }
-    const newUrl = detailData?.episodes[episodeIndex] || '';
+    let newUrl = detailData?.episodes[episodeIndex] || '';
+    if (newUrl.startsWith('ttps:')) {
+      newUrl = newUrl.replace('ttps:', 'https:');
+    }
+
     if (newUrl !== videoUrl) {
       setVideoUrl(newUrl);
     }
