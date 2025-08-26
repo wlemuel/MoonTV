@@ -87,6 +87,7 @@ export interface SearchResult {
   title: string;
   poster: string;
   episodes: string[];
+  episodes_title: string[];
   source: string;
   source_name: string;
   class?: string;

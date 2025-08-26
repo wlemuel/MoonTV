@@ -52,17 +52,22 @@ export async function searchFromApi(
     // 处理第一页结果
     const results = data.list.map((item: ApiSearchItem) => {
       let episodes: string[] = [];
+      let episodes_title: string[] = [];
 
       // 使用正则表达式从 vod_play_url 提取 m3u8 链接
       if (item.vod_play_url) {
-        const m3u8Regex = /\$(https?:\/\/[^"'\s]+?\.m3u8)/g;
+        //const m3u8Regex = /\$(https?:\/\/[^"'\s]+?\.m3u8)/g;
+        const nameM2u8Regex = /([^$#]+)\$(https?:\/\/[^#]+\.m3u8)/g;
+
         // 先用 $$$ 分割
         const vod_play_url_array = item.vod_play_url.split('$$$');
         // 对每个分片做匹配，取匹配到最多的作为结果
         vod_play_url_array.forEach((url: string) => {
-          const matches = url.match(m3u8Regex) || [];
+          const matches = Array.from(url.matchAll(nameM2u8Regex));
+          // const matches = url.match(m3u8Regex) || [];
           if (matches.length > episodes.length) {
-            episodes = matches;
+            episodes_title = matches.map((m) => m[1]);
+            episodes = matches.map((m) => m[2]);
           }
         });
       }
@@ -78,6 +83,7 @@ export async function searchFromApi(
         title: item.vod_name.trim().replace(/\s+/g, ' '),
         poster: item.vod_pic,
         episodes,
+        episodes_title,
         source: apiSite.key,
         source_name: apiName,
         class: item.vod_class,
@@ -257,6 +263,7 @@ export async function getDetailFromApi(
     title: videoDetail.vod_name,
     poster: videoDetail.vod_pic,
     episodes,
+    episodes_title: [],
     source: apiSite.key,
     source_name: apiSite.name,
     class: videoDetail.vod_class,
@@ -333,6 +340,7 @@ async function handleSpecialSourceDetail(
     title: titleText,
     poster: coverUrl,
     episodes: matches,
+    episodes_title: [],
     source: apiSite.key,
     source_name: apiSite.name,
     class: '',

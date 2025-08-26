@@ -40,6 +40,7 @@ interface EpisodeSelectorProps {
   sourceSearchError?: string | null;
   /** 预计算的测速结果，避免重复测速 */
   precomputedVideoInfo?: Map<string, VideoInfo>;
+  episodesTitle?: string[];
 }
 
 /**
@@ -58,6 +59,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
   sourceSearchLoading = false,
   sourceSearchError = null,
   precomputedVideoInfo,
+  episodesTitle = [],
 }) => {
   const router = useRouter();
   const pageCount = Math.ceil(totalEpisodes / episodesPerPage);
@@ -411,7 +413,10 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:scale-105 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20'
                     }`.trim()}
                 >
-                  {episodeNumber}
+                  {episodeNumber}{' '}
+                  {episodesTitle.length >= episodeNumber
+                    ? episodesTitle[episodeNumber - 1]
+                    : ''}
                 </button>
               );
             })}
