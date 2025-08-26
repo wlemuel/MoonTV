@@ -143,6 +143,12 @@ function PlayPageClient() {
   // 总集数
   const totalEpisodes = detail?.episodes?.length || 0;
 
+  if (document.title.includes('|')) {
+    document.title = document.title.split('|')[0] + '| ' + detail?.title;
+  } else {
+    document.title = document.title + '| ' + detail?.title;
+  }
+
   // 用于记录是否需要在播放器 ready 后跳转到指定进度
   const resumeTimeRef = useRef<number | null>(null);
   // 上次使用的音量，默认 0.7
