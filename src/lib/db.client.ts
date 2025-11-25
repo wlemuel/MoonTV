@@ -189,12 +189,7 @@ class HybridCacheManager {
 
     const userCache = this.getUserCache(username);
 
-    // remove records from 155api
-    const filteredData = Object.fromEntries(
-      Object.entries(data).filter(([key]) => !key.startsWith("155api"))
-    )
-
-    userCache.playRecords = this.createCacheData(filteredData);
+    userCache.playRecords = this.createCacheData(data);
     this.saveUserCache(username, userCache);
   }
 
