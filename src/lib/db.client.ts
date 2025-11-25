@@ -188,7 +188,13 @@ class HybridCacheManager {
     if (!username) return;
 
     const userCache = this.getUserCache(username);
-    userCache.playRecords = this.createCacheData(data);
+
+    // remove records from 155api
+    const filteredData = Object.fromEntries(
+      Object.entries(data).filter(([key]) => !key.startsWith("155api"))
+    )
+
+    userCache.playRecords = this.createCacheData(filteredData);
     this.saveUserCache(username, userCache);
   }
 
@@ -1256,7 +1262,7 @@ export function subscribeToDataUpdates<T>(
   callback: (data: T) => void
 ): () => void {
   if (typeof window === 'undefined') {
-    return () => {};
+    return () => { };
   }
 
   const handleUpdate = (event: CustomEvent) => {
