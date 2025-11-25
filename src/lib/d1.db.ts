@@ -127,7 +127,7 @@ export class D1Storage implements IStorage {
       const db = await this.getDatabase();
       const result = await db
         .prepare(
-          'SELECT * FROM play_records WHERE username = ? ORDER BY save_time DESC'
+          'SELECT * FROM play_records WHERE source_name != "AV-155资源" AND username = ? ORDER BY save_time DESC'
         )
         .bind(userName)
         .all<any>();
